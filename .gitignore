@@ -1,0 +1,10 @@
+.classpath
+.project
+.settings/
+target/
+.DS_Store
+*.properties
+*.log
+bin/
+assets/
+gen/
