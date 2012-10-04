@@ -15,14 +15,18 @@ public class TaskerHelper extends SQLiteOpenHelper {
 
 	@Override
 	public void onCreate(SQLiteDatabase db) {
-		// TODO Auto-generated method stub
-
+		StringBuilder build = new StringBuilder();
+		build.append("CREATE TABLE TASK (");
+		build.append(TaskerColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,");
+		build.append(TaskerColumns.TITLE + " VARCHAR(30) NOT NULL,");
+		build.append(TaskerColumns.DESCRIPTION + " VARCHAR(255),");
+		build.append(TaskerColumns.COMPLETE + " BOOLEAN DEFAULT FALSE");
+		build.append(");");
+		db.execSQL(build.toString());
 	}
 
 	@Override
 	public void onUpgrade(SQLiteDatabase db, int oldV, int newV) {
-		// TODO Auto-generated method stub
-
 	}
 
 }
