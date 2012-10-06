@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android" >
-    <PreferenceCategory android:title="Main">
-        <Preference android:enabled="false" android:title="TODO"/>
-    </PreferenceCategory>
-    
+
+    <CheckBoxPreference
+        android:defaultValue="true"
+        android:key="pref_completed"
+        android:title="@string/pref_completed" />
 
 </PreferenceScreen>

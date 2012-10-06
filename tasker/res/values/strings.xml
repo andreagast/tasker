@@ -5,5 +5,8 @@
     <string name="menu_add">Add&#8230;</string>
     <string name="main_add_title">Insert a title</string>
     <string name="main_add_description">Description</string>
-
+    <string name="pref_completed">Show completed</string>
+    <string name="pref_completed_on">Display everything.</string>
+    <string name="pref_completed_off">Display only not completed tasks.</string>
+	<string name="list_empty">Nothing here&#8230; for now.</string>
 </resources>

@@ -11,7 +11,7 @@ public class TaskerProvider extends ContentProvider {
 	public static final String AUTHORITY = "it.gas.tasker.provider";
 	public static final String TABLE = "task";
 	public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY
-			+ "/task");
+			+ "/" + TABLE);
 	private TaskerHelper helper;
 	private static final UriMatcher uriMatcher = new UriMatcher(
 			UriMatcher.NO_MATCH);
@@ -26,7 +26,7 @@ public class TaskerProvider extends ContentProvider {
 		switch (uriMatcher.match(uri)) {
 		case 0:
 			SQLiteDatabase db = helper.getWritableDatabase();
-			int del = db.delete("task", selection, selectionArgs);
+			int del = db.delete(TABLE, selection, selectionArgs);
 			return del;
 		case 1:
 			return 0;
@@ -52,7 +52,7 @@ public class TaskerProvider extends ContentProvider {
 		switch (uriMatcher.match(uri)) {
 		case 0:
 			SQLiteDatabase db = helper.getWritableDatabase();
-			long id = db.insert("task", null, values);
+			long id = db.insert(TABLE, null, values);
 			return Uri.parse("content://" + AUTHORITY + "/" + TABLE + "/" + id);
 		case 1:
 		default:
@@ -72,9 +72,9 @@ public class TaskerProvider extends ContentProvider {
 		SQLiteDatabase db = helper.getWritableDatabase();
 		switch (uriMatcher.match(uri)) {
 		case 0:
-		case 1: // TODO
-			Cursor c = db.query(TABLE, projection, selection, selectionArgs, null,
-					null, sortOrder);
+		case 1:
+			Cursor c = db.query(TABLE, projection, selection, selectionArgs,
+					null, null, sortOrder);
 			c.setNotificationUri(getContext().getContentResolver(), uri);
 			return c;
 		default:

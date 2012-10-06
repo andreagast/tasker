@@ -2,12 +2,15 @@ package it.gas.tasker;
 
 import android.annotation.TargetApi;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.Preference;
 import android.preference.PreferenceActivity;
 import android.view.MenuItem;
 
-public class PrefActivity extends PreferenceActivity {
+public class PrefActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
+	public static final String PREF_COMPLETED = "pref_completed";
 
 	@SuppressWarnings("deprecation")
 	@Override
@@ -20,6 +23,23 @@ public class PrefActivity extends PreferenceActivity {
 		}
 		
 		addPreferencesFromResource(R.xml.pref_main);
+		restoreSummary();
+	}
+	
+	@SuppressWarnings("deprecation")
+	@Override
+	protected void onResume() {
+	    super.onResume();
+	    getPreferenceScreen().getSharedPreferences()
+	            .registerOnSharedPreferenceChangeListener(this);
+	}
+
+	@SuppressWarnings("deprecation")
+	@Override
+	protected void onPause() {
+	    super.onPause();
+	    getPreferenceScreen().getSharedPreferences()
+	            .unregisterOnSharedPreferenceChangeListener(this);
 	}
 
 	@Override
@@ -32,6 +52,30 @@ public class PrefActivity extends PreferenceActivity {
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
+		}
+	}
+
+	@SuppressWarnings("deprecation")
+	public void onSharedPreferenceChanged(SharedPreferences sPref, String key) {
+		if (key.equals(PREF_COMPLETED)) {
+			Preference pref = findPreference(PREF_COMPLETED);
+			if (sPref.getBoolean(PREF_COMPLETED, false)) {
+				pref.setSummary(R.string.pref_completed_on);
+			} else {
+				pref.setSummary(R.string.pref_completed_off);
+			}
+			
+		}
+	}
+	
+	@SuppressWarnings("deprecation")
+	private void restoreSummary() {
+		SharedPreferences sPref = getPreferenceScreen().getSharedPreferences();
+		Preference pref = findPreference(PREF_COMPLETED);
+		if (sPref.getBoolean(PREF_COMPLETED, false)) {
+			pref.setSummary(R.string.pref_completed_on);
+		} else {
+			pref.setSummary(R.string.pref_completed_off);
 		}
 	}
 

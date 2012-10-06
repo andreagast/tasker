@@ -3,6 +3,7 @@ package it.gas.tasker;
 import it.gas.tasker.db.TaskerColumns;
 import it.gas.tasker.db.TaskerProvider;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.ContentValues;
@@ -10,7 +11,9 @@ import android.content.CursorLoader;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.database.Cursor;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.SimpleCursorAdapter;
@@ -21,11 +24,15 @@ public class MainActivity extends ListActivity implements
 		LoaderManager.LoaderCallbacks<Cursor> {
 	private SimpleCursorAdapter adapter;
 	private AlertDialog dialog;
+	private SharedPreferences pref;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		pref = PreferenceManager.getDefaultSharedPreferences(this);
+		
 		getLoaderManager().initLoader(0, null, this);
 		final String[] FROM = { TaskerColumns.TITLE, TaskerColumns.DESCRIPTION };
 		final int[] TO = { android.R.id.text1, android.R.id.text2 };
@@ -57,7 +64,7 @@ public class MainActivity extends ListActivity implements
 
 	private void addPopup(MenuItem mi) {
 		AlertDialog.Builder b = new AlertDialog.Builder(this);
-		b.setTitle(R.string.app_name);
+		b.setTitle(R.string.menu_add);
 		b.setCancelable(true);
 		b.setView(getLayoutInflater().inflate(R.layout.activity_dialog_add,
 				null));
@@ -91,8 +98,15 @@ public class MainActivity extends ListActivity implements
 	}
 
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-		return new CursorLoader(this, TaskerProvider.CONTENT_URI, null, null,
-				null, null);
+		//show completed pref		
+		String selection = null;
+		boolean b = pref.getBoolean(PrefActivity.PREF_COMPLETED, true);
+		Log.d(this.getLocalClassName(), "pref_completed: " + b);
+		if(! b)
+			selection = TaskerColumns.COMPLETE + " = 'FALSE'";
+		//execute
+		return new CursorLoader(this, TaskerProvider.CONTENT_URI, null,
+				selection, null, null);
 	}
 
 	public void onLoadFinished(Loader<Cursor> loader, Cursor data) {
