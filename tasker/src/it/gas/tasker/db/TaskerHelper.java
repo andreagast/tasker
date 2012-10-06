@@ -20,7 +20,9 @@ public class TaskerHelper extends SQLiteOpenHelper {
 		build.append(TaskerColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT,");
 		build.append(TaskerColumns.TITLE + " VARCHAR(30) NOT NULL,");
 		build.append(TaskerColumns.DESCRIPTION + " VARCHAR(255),");
-		build.append(TaskerColumns.COMPLETE + " BOOLEAN DEFAULT FALSE");
+		build.append(TaskerColumns.COMPLETE + " BOOLEAN DEFAULT FALSE,");
+		build.append(TaskerColumns.CREATED + " DATETIME DEFAULT CURRENT_TIMESTAMP,");
+		build.append(TaskerColumns.MODIFIED + " DATETIME DEFAULT CURRENT_TIMESTAMP");
 		build.append(");");
 		db.execSQL(build.toString());
 	}
