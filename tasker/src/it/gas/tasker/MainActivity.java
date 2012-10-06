@@ -25,14 +25,14 @@ public class MainActivity extends ListActivity implements
 	private SimpleCursorAdapter adapter;
 	private AlertDialog dialog;
 	private SharedPreferences pref;
-	
+
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
-		
+
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
-		
+
 		getLoaderManager().initLoader(0, null, this);
 		final String[] FROM = { TaskerColumns.TITLE, TaskerColumns.DESCRIPTION };
 		final int[] TO = { android.R.id.text1, android.R.id.text2 };
@@ -64,7 +64,7 @@ public class MainActivity extends ListActivity implements
 
 	private void addPopup(MenuItem mi) {
 		AlertDialog.Builder b = new AlertDialog.Builder(this);
-		b.setTitle(R.string.menu_add);
+		//.setTitle(R.string.menu_add);
 		b.setCancelable(true);
 		b.setView(getLayoutInflater().inflate(R.layout.activity_dialog_add,
 				null));
@@ -98,14 +98,16 @@ public class MainActivity extends ListActivity implements
 	}
 
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-		//show completed pref		
+		// show completed pref
 		String selection = null;
 		boolean b = pref.getBoolean(PrefActivity.PREF_COMPLETED, true);
 		Log.d(this.getLocalClassName(), "pref_completed: " + b);
-		if(! b)
+		if (!b)
 			selection = TaskerColumns.COMPLETE + " = 'FALSE'";
-		//execute
-		return new CursorLoader(this, TaskerProvider.CONTENT_URI, null,
+		// execute
+		String[] projection = { TaskerColumns._ID, TaskerColumns.TITLE,
+				TaskerColumns.DESCRIPTION };
+		return new CursorLoader(this, TaskerProvider.CONTENT_URI, projection,
 				selection, null, null);
 	}
 
