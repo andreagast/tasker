@@ -1,6 +1,7 @@
 package it.gas.tasker.db;
 
 import android.content.ContentProvider;
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
@@ -24,24 +25,32 @@ public class TaskerProvider extends ContentProvider {
 	@Override
 	public int delete(Uri uri, String selection, String[] selectionArgs) {
 		switch (uriMatcher.match(uri)) {
-		case 0:
-			SQLiteDatabase db = helper.getWritableDatabase();
-			int del = db.delete(TABLE, selection, selectionArgs);
-			return del;
-		case 1:
-			return 0;
+		case 0: // all the db
+			break;
+		case 1: // only a specified row
+			selection = "_ID = ?";
+			selectionArgs = new String[1];
+			selectionArgs[0] = uri.getLastPathSegment();
+			break;
 		default:
 			return 0;
 		}
+		SQLiteDatabase db = helper.getWritableDatabase();
+		int del = db.delete(TABLE, selection, selectionArgs);
+		db.close();
+		getContext().getContentResolver().notifyChange(uri, null);
+		return del;
 	}
 
 	@Override
 	public String getType(Uri uri) {
 		switch (uriMatcher.match(uri)) {
 		case 0:
-			return "vnd.android.cursor.dir/vnd." + AUTHORITY + "." + TABLE;
+			return ContentResolver.CURSOR_DIR_BASE_TYPE + "/vnd." + AUTHORITY
+					+ "." + TABLE;
 		case 1:
-			return "vnd.android.cursor.item/vnd." + AUTHORITY + "." + TABLE;
+			return ContentResolver.CURSOR_ITEM_BASE_TYPE + "/vnd." + AUTHORITY
+					+ "." + TABLE;
 		default:
 			return null;
 		}
@@ -53,7 +62,8 @@ public class TaskerProvider extends ContentProvider {
 		case 0:
 			SQLiteDatabase db = helper.getWritableDatabase();
 			long id = db.insert(TABLE, null, values);
-			return Uri.parse("content://" + AUTHORITY + "/" + TABLE + "/" + id);
+			getContext().getContentResolver().notifyChange(uri, null);
+			return Uri.withAppendedPath(CONTENT_URI, Long.toString(id));
 		case 1:
 		default:
 			return null;
@@ -72,14 +82,19 @@ public class TaskerProvider extends ContentProvider {
 		SQLiteDatabase db = helper.getWritableDatabase();
 		switch (uriMatcher.match(uri)) {
 		case 0:
+			break;
 		case 1:
-			Cursor c = db.query(TABLE, projection, selection, selectionArgs,
-					null, null, sortOrder);
-			c.setNotificationUri(getContext().getContentResolver(), uri);
-			return c;
+			selection = "_ID = ?";
+			selectionArgs = new String[1];
+			selectionArgs[0] = uri.getLastPathSegment();
+			break;
 		default:
 			return null;
 		}
+		Cursor c = db.query(TABLE, projection, selection, selectionArgs,
+				null, null, sortOrder);
+		c.setNotificationUri(getContext().getContentResolver(), uri);
+		return c;
 	}
 
 	@Override
@@ -87,12 +102,20 @@ public class TaskerProvider extends ContentProvider {
 			String[] selectionArgs) {
 		switch (uriMatcher.match(uri)) {
 		case 0:
-			SQLiteDatabase db = helper.getWritableDatabase();
-			return db.update(TABLE, values, selection, selectionArgs);
+			break;
 		case 1:
+			selection = "_ID = ?";
+			selectionArgs = new String[1];
+			selectionArgs[0] = uri.getLastPathSegment();
+			break;
 		default:
 			return 0;
 		}
+		SQLiteDatabase db = helper.getWritableDatabase();
+		int row = db.update(TABLE, values, selection, selectionArgs);
+		db.close();
+		getContext().getContentResolver().notifyChange(uri, null);
+		return row;
 	}
 
 }

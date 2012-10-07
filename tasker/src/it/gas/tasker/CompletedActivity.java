@@ -42,7 +42,7 @@ public class CompletedActivity extends ListActivity implements
 	}
 
 	public Loader<Cursor> onCreateLoader(int arg0, Bundle arg1) {
-		String selection = TaskerColumns.COMPLETE + " = 'TRUE'";
+		String selection = TaskerColumns.COMPLETE + " = 1";
 		String[] projection = { TaskerColumns._ID, TaskerColumns.TITLE };
 		return new CursorLoader(this, TaskerProvider.CONTENT_URI, projection,
 				selection, null, null);

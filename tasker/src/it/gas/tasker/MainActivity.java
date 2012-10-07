@@ -2,6 +2,7 @@ package it.gas.tasker;
 
 import it.gas.tasker.db.TaskerColumns;
 import it.gas.tasker.db.TaskerProvider;
+import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.app.AlertDialog;
@@ -16,12 +17,16 @@ import android.database.Cursor;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 import android.app.LoaderManager;
 
 public class MainActivity extends ListActivity implements
-		LoaderManager.LoaderCallbacks<Cursor>, DialogInterface.OnClickListener {
+		LoaderManager.LoaderCallbacks<Cursor>, DialogInterface.OnClickListener,
+		AdapterView.OnItemLongClickListener {
 	private SimpleCursorAdapter adapter;
 	private AlertDialog dialog;
 	private SharedPreferences pref;
@@ -30,6 +35,8 @@ public class MainActivity extends ListActivity implements
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+
+		getListView().setOnItemLongClickListener(this);
 
 		pref = PreferenceManager.getDefaultSharedPreferences(this);
 
@@ -80,7 +87,7 @@ public class MainActivity extends ListActivity implements
 		dialog.show();
 	}
 
-	private void save() {
+	private void saveNewTask() {
 		ContentValues values = new ContentValues();
 		TextView v = (TextView) dialog.findViewById(R.id.addTitle);
 		String s = v.getText().toString();
@@ -91,15 +98,28 @@ public class MainActivity extends ListActivity implements
 		getContentResolver().insert(TaskerProvider.CONTENT_URI, values);
 		getContentResolver().notifyChange(TaskerProvider.CONTENT_URI, null);
 	}
+	
+	private void markTaskAsCompleted(long id) {
+		Uri uri = Uri.withAppendedPath(TaskerProvider.CONTENT_URI, "" + id);
+		ContentValues values = new ContentValues();
+		values.put(TaskerColumns.COMPLETE, 1);
+		int row = getContentResolver().update(uri, values, null, null);
+		if (row > 0)
+			Toast.makeText(this, "Set as completed.", Toast.LENGTH_SHORT)
+					.show();
+		else
+			Toast.makeText(this, "Something went wrong :(", Toast.LENGTH_SHORT)
+					.show();
+	}
 
 	public Loader<Cursor> onCreateLoader(int id, Bundle args) {
-		String sort = TaskerColumns._ID +  " DESC";
+		String sort = TaskerColumns._ID + " DESC";
 		// show completed pref
 		String selection = null;
 		boolean b = pref.getBoolean(PrefActivity.PREF_COMPLETED, false);
 		Log.d(this.getLocalClassName(), "pref_completed: " + b);
 		if (!b)
-			selection = TaskerColumns.COMPLETE + " = 'FALSE'";
+			selection = TaskerColumns.COMPLETE + " = 0";
 		// execute
 		String[] projection = { TaskerColumns._ID, TaskerColumns.TITLE,
 				TaskerColumns.DESCRIPTION };
@@ -119,12 +139,44 @@ public class MainActivity extends ListActivity implements
 		switch (which) {
 		case DialogInterface.BUTTON_POSITIVE:
 			dialog.dismiss();
-			save();
+			saveNewTask();
 			break;
 		case DialogInterface.BUTTON_NEGATIVE:
 			dialog.dismiss();
 			break;
 		}
+	}
+
+	public boolean onItemLongClick(AdapterView<?> parent, View view,
+			int position, final long id) {
+		Uri uri = Uri.withAppendedPath(TaskerProvider.CONTENT_URI, "" + id);
+		Cursor c = getContentResolver().query(uri, null, null, null, null);
+		if (!c.moveToFirst()) {
+			Log.w(getLocalClassName(), "Cursor is empty... WTF???");
+			return false;
+		}
+		AlertDialog.Builder build = new AlertDialog.Builder(this);
+		build.setTitle(c.getString(c.getColumnIndex(TaskerColumns.TITLE)));
+		build.setMessage("Set the element as completed?");
+		build.setPositiveButton(R.string.ok,
+				new DialogInterface.OnClickListener() {
+
+					public void onClick(DialogInterface dialog, int which) {
+						markTaskAsCompleted(id);
+						dialog.dismiss();
+					}
+				});
+		build.setNegativeButton(R.string.cancel,
+				new DialogInterface.OnClickListener() {
+
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.dismiss();
+					}
+				});
+		build.create().show();
+		c.close();
+		
+		return true;
 	}
 
 }
