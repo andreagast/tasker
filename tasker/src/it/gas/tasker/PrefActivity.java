@@ -18,9 +18,8 @@ public class PrefActivity extends PreferenceActivity implements SharedPreference
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB) {
+		if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB)
 			getActionBar().setDisplayHomeAsUpEnabled(true);
-		}
 		
 		addPreferencesFromResource(R.xml.pref_main);
 		restoreSummary();

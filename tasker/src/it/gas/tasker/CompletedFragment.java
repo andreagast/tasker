@@ -11,7 +11,7 @@ import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.SimpleCursorAdapter;
+import android.support.v4.widget.SimpleCursorAdapter;
 
 public class CompletedFragment extends ListFragment implements
 		LoaderManager.LoaderCallbacks<Cursor> {
