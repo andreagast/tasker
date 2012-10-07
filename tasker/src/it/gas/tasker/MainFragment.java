@@ -32,7 +32,6 @@ public class MainFragment extends ListFragment implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		Log.d("MainFragment", "onCreate fragment");
 
 		pref = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
