@@ -43,6 +43,10 @@ public class MainActivity extends FragmentActivity implements
 			i = new Intent(this, CompletedActivity.class);
 			startActivity(i);
 			return true;
+		case R.id.menu_about:
+			i = new Intent(this, AboutActivity.class);
+			startActivity(i);
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
