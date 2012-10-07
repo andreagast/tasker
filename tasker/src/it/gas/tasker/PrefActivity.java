@@ -1,12 +1,12 @@
 package it.gas.tasker;
 
 import android.annotation.TargetApi;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.Preference;
 import android.preference.PreferenceActivity;
+import android.support.v4.app.NavUtils;
 import android.view.MenuItem;
 
 public class PrefActivity extends PreferenceActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
@@ -46,9 +46,10 @@ public class PrefActivity extends PreferenceActivity implements SharedPreference
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			Intent i = new Intent(this, MainActivity.class);
+			/*Intent i = new Intent(this, MainActivity.class);
 			i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			startActivity(i);
+			startActivity(i);*/
+			NavUtils.navigateUpFromSameTask(this);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
