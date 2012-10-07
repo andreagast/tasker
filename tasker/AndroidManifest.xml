@@ -16,6 +16,7 @@
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -26,7 +27,20 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="it.gas.tasker.MainActivity" />
         </activity>
-        <provider android:exported="false" android:name=".db.TaskerProvider" android:authorities="it.gas.tasker.provider"></provider>
+
+        <provider
+            android:name=".db.TaskerProvider"
+            android:authorities="it.gas.tasker.provider"
+            android:exported="false" >
+        </provider>
+
+        <activity
+            android:name=".CompletedActivity"
+            android:label="@string/title_activity_completed" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="it.gas.tasker.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

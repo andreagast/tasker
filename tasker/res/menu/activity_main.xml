@@ -4,4 +4,5 @@
         android:orderInCategory="100"
         android:showAsAction="never" android:icon="@drawable/settings"/>
     <item android:id="@+id/menu_add" android:title="@string/menu_add" android:showAsAction="ifRoom" android:icon="@drawable/add"></item>
+    <item android:id="@+id/menu_completed" android:title="@string/title_activity_completed" android:showAsAction="never" android:orderInCategory="200"></item>
 </menu>
