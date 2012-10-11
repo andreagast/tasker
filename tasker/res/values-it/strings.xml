@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Tasker</string>
+    <string name="menu_settings">Impostazioni</string>
+    <string name="menu_add">Nuovo&#8230;</string>
+    <string name="main_add_title">Titolo</string>
+    <string name="main_add_description">Descrizione</string>
+    <string name="pref_completed">Mostra completi</string>
+    <string name="pref_completed_on">Mostra tutto.</string>
+    <string name="pref_completed_off">Mostra solo attività non completate.</string>
+    <string name="list_empty">Qui non c'è nulla&#8230; per ora.</string>
+    <string name="title_activity_completed">Attività completate</string>
+    <string name="ok">OK</string>
+    <string name="cancel">Annulla</string>
+    <string name="title_activity_about">Info</string>
+    <string name="logo">Logo</string>
+    <string name="about_by">by gash</string>
+
+</resources>
