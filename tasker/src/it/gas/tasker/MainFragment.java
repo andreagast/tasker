@@ -87,7 +87,7 @@ public class MainFragment extends ListFragment implements
 		}
 		AlertDialog.Builder build = new AlertDialog.Builder(getActivity());
 		build.setTitle(c.getString(c.getColumnIndex(TaskerColumns.TITLE)));
-		build.setMessage("Set the element as completed?");
+		build.setMessage(R.string.main_setcompleted_question);
 		build.setPositiveButton(R.string.ok,
 				new DialogInterface.OnClickListener() {
 
@@ -116,10 +116,10 @@ public class MainFragment extends ListFragment implements
 		int row = getActivity().getContentResolver().update(uri, values, null,
 				null);
 		if (row > 0)
-			Toast.makeText(getActivity(), "Set as completed.",
+			Toast.makeText(getActivity(), R.string.main_setcompleted_toast,
 					Toast.LENGTH_SHORT).show();
 		else
-			Toast.makeText(getActivity(), "Something went wrong :(",
+			Toast.makeText(getActivity(), R.string.main_setcompleted_error,
 					Toast.LENGTH_SHORT).show();
 	}
 

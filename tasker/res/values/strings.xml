@@ -15,5 +15,8 @@
     <string name="title_activity_about">About</string>
     <string name="logo">Logo</string>
     <string name="about_by">by gash</string>
-
+	<string name="main_setcompleted_question">Set the element as completed?</string>
+	<string name="main_setcompleted_toast">Set as completed.</string>
+	<string name="main_setcompleted_error">Something went wrong :(</string>
+	
 </resources>
