@@ -11,13 +11,13 @@
     <string name="pref_completed_off">Mostra solo attività non completate.</string>
     <string name="list_empty">Qui non c\'è nulla&#8230; per ora.</string>
     <string name="title_activity_completed">Attività completate</string>
-    <string name="ok">OK</string>
-    <string name="cancel">Annulla</string>
     <string name="title_activity_about">Info</string>
     <string name="logo">Logo</string>
     <string name="about_by">by gash</string>
 	<string name="main_setcompleted_question">Segnare l\'elemento come completato?</string>
 	<string name="main_setcompleted_toast">Segnato completato.</string>
 	<string name="main_setcompleted_error">Qualcosa è andato storto :(</string>
-	
+	<string name="completed_deleteAll">Elimina tutto</string>
+    <string name="completed_deleteAll_question">Sei sicuro di voler cancellare tutte le attività completate?</string>
+    <string name="completed_toast">Eliminate %d attività.</string>
 </resources>

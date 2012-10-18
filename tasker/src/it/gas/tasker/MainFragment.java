@@ -88,7 +88,7 @@ public class MainFragment extends ListFragment implements
 		AlertDialog.Builder build = new AlertDialog.Builder(getActivity());
 		build.setTitle(c.getString(c.getColumnIndex(TaskerColumns.TITLE)));
 		build.setMessage(R.string.main_setcompleted_question);
-		build.setPositiveButton(R.string.ok,
+		build.setPositiveButton(android.R.string.ok,
 				new DialogInterface.OnClickListener() {
 
 					public void onClick(DialogInterface dialog, int which) {
@@ -96,7 +96,7 @@ public class MainFragment extends ListFragment implements
 						dialog.dismiss();
 					}
 				});
-		build.setNegativeButton(R.string.cancel,
+		build.setNegativeButton(android.R.string.cancel,
 				new DialogInterface.OnClickListener() {
 
 					public void onClick(DialogInterface dialog, int which) {

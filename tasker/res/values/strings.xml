@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
 
     <string name="app_name">Tasker</string>
@@ -10,13 +11,13 @@
     <string name="pref_completed_off">Display only not completed tasks.</string>
     <string name="list_empty">Nothing here&#8230; for now.</string>
     <string name="title_activity_completed">Completed tasks</string>
-    <string name="ok">OK</string>
-    <string name="cancel">Cancel</string>
     <string name="title_activity_about">About</string>
     <string name="logo">Logo</string>
     <string name="about_by">by gash</string>
 	<string name="main_setcompleted_question">Set the element as completed?</string>
 	<string name="main_setcompleted_toast">Set as completed.</string>
 	<string name="main_setcompleted_error">Something went wrong :(</string>
-	
+	<string name="completed_deleteAll">Delete all</string>
+	<string name="completed_deleteAll_question">Are you sure you want to delete all the completed tasks?</string>
+	<string name="completed_toast">Deleted %d tasks.</string>
 </resources>

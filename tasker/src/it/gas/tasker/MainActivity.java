@@ -55,11 +55,11 @@ public class MainActivity extends FragmentActivity implements
 	public void onClick(DialogInterface dialog, int which) {
 		switch (which) {
 		case DialogInterface.BUTTON_POSITIVE:
-			dialog.dismiss();
+			//dialog.dismiss();
 			saveNewTask();
 			break;
 		case DialogInterface.BUTTON_NEGATIVE:
-			dialog.dismiss();
+			//dialog.dismiss();
 			break;
 		}
 	}
@@ -70,8 +70,8 @@ public class MainActivity extends FragmentActivity implements
 		b.setCancelable(true);
 		b.setView(getLayoutInflater().inflate(R.layout.activity_dialog_add,
 				null));
-		b.setNegativeButton(getString(R.string.cancel), this);
-		b.setPositiveButton(getString(R.string.ok), this);
+		b.setNegativeButton(getString(android.R.string.cancel), this);
+		b.setPositiveButton(getString(android.R.string.ok), this);
 		dialog = b.create();
 		dialog.show();
 	}
