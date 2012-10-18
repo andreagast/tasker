@@ -77,7 +77,8 @@ public class MainFragment extends ListFragment implements
 
 	public boolean onItemLongClick(AdapterView<?> parent, View view,
 			int position, final long id) {
-		Uri uri = Uri.withAppendedPath(TaskerProvider.CONTENT_URI, "" + id);
+		Uri uri = Uri.withAppendedPath(TaskerProvider.CONTENT_URI,
+				Long.toString(id));
 		Cursor c = getActivity().getContentResolver().query(uri, null, null,
 				null, null);
 		if (!c.moveToFirst()) {
@@ -93,16 +94,9 @@ public class MainFragment extends ListFragment implements
 
 					public void onClick(DialogInterface dialog, int which) {
 						markTaskAsCompleted(id);
-						dialog.dismiss();
 					}
 				});
-		build.setNegativeButton(android.R.string.cancel,
-				new DialogInterface.OnClickListener() {
-
-					public void onClick(DialogInterface dialog, int which) {
-						dialog.dismiss();
-					}
-				});
+		build.setNegativeButton(android.R.string.cancel, null);
 		build.create().show();
 		c.close();
 
@@ -110,7 +104,8 @@ public class MainFragment extends ListFragment implements
 	}
 
 	private void markTaskAsCompleted(long id) {
-		Uri uri = Uri.withAppendedPath(TaskerProvider.CONTENT_URI, "" + id);
+		Uri uri = Uri.withAppendedPath(TaskerProvider.CONTENT_URI,
+				Long.toString(id));
 		ContentValues values = new ContentValues();
 		values.put(TaskerColumns.COMPLETE, 1);
 		int row = getActivity().getContentResolver().update(uri, values, null,

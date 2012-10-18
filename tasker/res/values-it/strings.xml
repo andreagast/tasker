@@ -20,4 +20,6 @@
 	<string name="completed_deleteAll">Elimina tutto</string>
     <string name="completed_deleteAll_question">Sei sicuro di voler cancellare tutte le attività completate?</string>
     <string name="completed_toast">Eliminate %d attività.</string>
+    <string name="completed_delete">Eliminare questo elemento?</string>
+    <string name="completed_delete_toast">Eliminato.</string>
 </resources>

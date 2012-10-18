@@ -20,4 +20,6 @@
 	<string name="completed_deleteAll">Delete all</string>
 	<string name="completed_deleteAll_question">Are you sure you want to delete all the completed tasks?</string>
 	<string name="completed_toast">Deleted %d tasks.</string>
+	<string name="completed_delete">Delete this element?</string>
+	<string name="completed_delete_toast">Deleted.</string>
 </resources>
